@@ -1,5 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <queue>
+#include <unordered_map>
+#include <cmath>
+
+using namespace std;
 
 class binaryTree{
     public:
@@ -37,13 +43,52 @@ void dfsPrint(binaryTree *node){
     printf("%d ", *(int *)node->data);
 
     dfsPrint(node->left);
+    cout << "\n";
     dfsPrint(node->right);
+}
+
+void bfsPrintRecur(binaryTree *node){
+    
+    // Print node 
+    printf("%d ", *(int *)node->data);
+
+    // Print both children
+    
+}
+
+void bfsPrint(binaryTree *node){
+
+    unordered_map<binaryTree *, bool> marked;
+    queue<void *> q;
+    q.push(node);
+    int level = 1;
+
+    //printf("%d ", *(int *)((binaryTree *)q.front())->data);
+
+    binaryTree *cur;
+    while (q.size() > 0){
+        cur = (binaryTree *)q.front();
+        q.pop();
+        if (!marked[cur]){
+            printf("%d ", *(int *)((binaryTree *)cur->data));
+            marked[cur] = true;
+            if (!marked.count(cur->left) && cur->left != NULL)
+                q.push(cur->left);
+            if (!marked.count(cur->right) && cur->right != NULL)
+                q.push(cur->right);
+        }
+            
+        if (pow(2, level) == marked.size() + 1 ){
+            level++;
+            putchar('\n');
+        }
+    }
 }
 
 int main(){
 
-    int x[15] = {0};
-    for (int i = 0 ; i< 15 ; i++){
+    int x[12] = {0};
+    for (int i = 0 ; i< 12 ; i++){
         x[i] = i;
     }
 
@@ -68,11 +113,6 @@ int main(){
     tree->left->right->setRight(x+10);
 
     tree->right->left->setLeft(x+11);
-    tree->right->left->setRight(x+12);
-    
-    tree->right->right->setLeft(x+13);
-    tree->right->right->setRight(x+14);
-   
 
     /* Example */ 
     printf("Should look like: \n");
@@ -82,12 +122,18 @@ int main(){
     printf("%d %d\n", *(int *)tree->right->left->data, *(int*) tree->right->right->data);
     printf("%d %d ", *(int *)tree->left->left->left->data, *(int*) tree->left->left->right->data);
     printf("%d %d ", *(int *)tree->left->right->left->data, *(int*) tree->left->right->right->data);
-    printf("%d %d ", *(int *)tree->right->left->left->data, *(int*) tree->right->left->right->data);
-    printf("%d %d\n", *(int *)tree->right->right->left->data, *(int*) tree->right->right->right->data);
+    printf("%d \n ", *(int *)tree->right->left->left->data);
     printf("\n\n");
 
-    printf("\n\ncalling dfsPrint: \n");
-    dfsPrint(tree);
-    printf("\n\n");
+    
+
+    //printf("\n\ncalling dfsPrint: \n");
+    //dfsPrint(tree);
+    //printf("\n\n");
+    
+    
+    printf("\n\ncalling bfsPrint: \n");
+    bfsPrint(tree);
+    
 }
 
