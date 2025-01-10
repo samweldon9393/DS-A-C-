@@ -7,14 +7,19 @@
 
 using namespace std;
 
+/* Basic implementation of a binary tree 
+ */
 class binaryTree{
     public:
 
+        // Everything is public - why not it's just practice
         binaryTree *left;
         binaryTree *right;
         void *data;
         size_t elementSize;
 
+        // Initialize a tree with a data pointer and and the size of the 
+        // data it points to (all elements must be same size or bad things)
         binaryTree(void *data, size_t size){
             this->data = data;
             this->elementSize = size;
@@ -22,33 +27,46 @@ class binaryTree{
             this->right = NULL;
         }
 
+        // Destructor
         ~binaryTree(){
             free(data);
             left = NULL;
             right = NULL;
         }
 
+        // Initialize a new node, point to it with left 
+        // Element size must be the same as this
         binaryTree *setLeft(void *data){
             left = new binaryTree(data, elementSize);
             return left;
         }
 
+        // Initialize a new node, point to it with right 
+        // Element size must be the same as this
         binaryTree *setRight(void *data){
             right = new binaryTree(data, elementSize);
             return right;
         }
 
+        // Setter method for left 
+        // Not really needed since left is public, but cleaner
         binaryTree *linkLeft(binaryTree *newLeft){
             this->left = newLeft;
-            return left;
+            return left; // Returns itself, may make some code cleaner later
         }
 
+        // Setter method for right 
         binaryTree *linkRight(binaryTree *newRight){
             this->right = newRight;
             return right;
         }
 
+        // Methods defined outside of class 
+        
+        // Depth First Search through all elements and print them
         int dfsPrint(binaryTree *node);
+
+        // Breadth First Search through all elements and print them
         void bfsPrint();
 
         // Fill the tree in depth first order with contents of arr 
@@ -67,7 +85,12 @@ class binaryTree{
 
         }
 
-        // Fill the tree in breadth first order with contents of arr
+        /* 
+         * Fill the tree in breadth first order with contents of arr
+         * @param arr - array of items to populate tree 
+         * @param num - number of elements in array 
+         * @return - the bottom rightmost node
+         */
         binaryTree *bfsFill(void *arr, size_t num){
            
             queue<binaryTree *> q;
@@ -87,12 +110,15 @@ class binaryTree{
                 it += elementSize;
                 if (++j >= num)
                     break;
+
                 q.push(cur->setRight(it));
                 it += elementSize;
                 j++;
             }
 
-            return this; 
+            // If there's a right node it's the last element so return it 
+            // Otherwise left is the last element
+            return cur->right ? cur->right : cur->left;
         }
 };
 
@@ -142,57 +168,15 @@ void binaryTree::bfsPrint(){
 
 int main(){
 
-    int x[15] = {0};
-    for (int i = 0 ; i< 15 ; i++){
+    int x[300] = {0};
+    for (int i = 0 ; i< 300 ; i++){
         x[i] = i;
     }
 
     binaryTree *tree = new binaryTree(x, 4);
 
-   
 
-/*
-    tree->setLeft(x+1);
-    tree->setRight(x+2);
-
-    tree->left->setLeft(x+3);
-    tree->left->setRight(x+4);
-
-    tree->right->setLeft(x+5);
-    tree->right->setRight(x+6);
-
-    tree->left->left->setLeft(x+7);
-    tree->left->left->setRight(x+8);
-    
-    tree->left->right->setLeft(x+9);
-    tree->left->right->setRight(x+10);
-
-    tree->right->left->setLeft(x+11);
-    tree->right->left->setRight(x+12);
-
-    tree->right->right->setLeft(x+13);
-    tree->right->right->setRight(x+14);
-*/
-
-    tree->bfsFill(x+1, 14);
-
-    /* Example */ 
-    printf("Should look like: \n");
-    printf("%d\n", *(int *)tree->data);
-    printf("%d %d\n", *(int *)tree->left->data, *(int*) tree->right->data);
-    printf("%d %d ", *(int *)tree->left->left->data, *(int*) tree->left->right->data);
-    printf("%d %d\n", *(int *)tree->right->left->data, *(int*) tree->right->right->data);
-    printf("%d %d ", *(int *)tree->left->left->left->data, *(int*) tree->left->left->right->data);
-    printf("%d %d ", *(int *)tree->left->right->left->data, *(int*) tree->left->right->right->data);
-    printf("%d %d\n ", *(int *)tree->right->left->left->data, *(int *)tree->right->left->right->data);
-    printf("\n\n");
-
-    
-
-    //printf("\n\ncalling dfsPrint: \n");
-    //dfsPrint(tree);
-    //printf("\n\n");
-    
+    tree->bfsFill(x+1, 299);
     
     printf("\n\ncalling bfsPrint: \n");
     tree->bfsPrint();
