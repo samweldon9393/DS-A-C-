@@ -5,6 +5,8 @@ I'm taking Data Structures and Algorithms at school starting in a few weeks,
     so this is my preparation. The class will be taught in Java, so I plan to
     continue working in here throughout the semester as supplemental learning.
     
-
+</p>
+<p>
     I'm implenting in C/C++ to better understand how these data structures 
-    truly work without Java's abstractions.</p>
+    truly work without Java's abstractions.
+</p>

@@ -1,7 +1,7 @@
 CC = g++
 
-binarytree: binarytree.cpp
+BinaryTree: BinaryTree.cpp
 
 .PHONY: clean
 clean:
-	rm -f *.o binarytree
+	rm -f *.o BinaryTree
