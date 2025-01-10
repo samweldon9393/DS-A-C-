@@ -37,13 +37,29 @@ int BinaryTreeTest(){
 
 #ifdef H
 #include "Heap.h"
+
+int compare(void *x, void *y){
+    return *(int *)x - *(int *)y;
+}
+
 int HeapTest(){
     int arr[30] = {0};
 
     for (int i = 0 ; i < 30 ; i++)
         arr[i] = i;
     
-    Heap heap = new Heap(arr);
+    Heap *heap = new Heap(arr, 30, 4, &compare);
+
+    printf("heap head: %d\n", *(int *)heap->head);
+
+    char *it = (char *)heap->head;
+    it += heap->elementSize;
+
+    printf("element 2: %d\n", *(int *)it);
+
+    printf("compare element2, head: %d\n", heap->compare(it, heap->head));
+    printf("compare head, element2: %d\n", heap->compare(heap->head, it));
+
 
     return 0;
 }
@@ -52,6 +68,7 @@ int HeapTest(){
 int main(){
 
     #ifdef H
+
     return HeapTest();
 
 
