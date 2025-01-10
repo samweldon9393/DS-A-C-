@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include "BSTree.h"
 
-int main(){
+#ifdef BT
+#include "BSTree.h"
+int BinaryTreeTest(){
 
     int x[30] = {0};
     for (int i = 0 ; i< 30 ; i++){
@@ -29,4 +30,31 @@ int main(){
 
     //BSTree *bstree = new BSTree(x, 4);
     //bstree->test();
+    
+    return 0;
+}
+#endif
+
+#ifdef H
+#include "Heap.h"
+int HeapTest(){
+    int arr[30] = {0};
+
+    for (int i = 0 ; i < 30 ; i++)
+        arr[i] = i;
+    
+    Heap heap = new Heap(arr);
+
+    return 0;
+}
+#endif
+
+int main(){
+
+    #ifdef H
+    return HeapTest();
+
+
+
+    #endif
 }

@@ -1,16 +1,25 @@
 CC = g++
+CFLAGS = -g -Wall
 
-Main: Main.o BSTree.o BinaryTree.o
+MainH: MainH.o Heap.o
 
-Main.o: Main.cpp
+MainBT: MainBT.o BSTree.o BinaryTree.o
 
-BSTree: BSTree.o BinaryTree.o BinaryTree.h
+MainH.o: Main.cpp
+	$(CC) -c -DH $(CFLAGS) -o MainH.o Main.cpp
+
+MainBT.o: Main.cpp
+	$(CC) -c -DBT $(CFLAGS) -o MainBT.o Main.cpp
+
+BSTree: BSTree.o BinaryTree.o 
 
 BSTree.o: BSTree.cpp BinaryTree.h
 
-BinaryTree: BinaryTree.o BinaryTree.h
+BinaryTree: BinaryTree.o 
 
 BinaryTree.o: BinaryTree.cpp BinaryTree.h
+
+Heap.o: Heap.cpp Heap.h
 
 .PHONY: clean
 clean:
