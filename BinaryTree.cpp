@@ -151,24 +151,3 @@ void BinaryTree::bfsPrint(){
         }
     }
 }
-
-int main(){
-
-    int x[300] = {0};
-    for (int i = 0 ; i< 300 ; i++){
-        x[i] = i;
-    }
-
-    BinaryTree *tree = new BinaryTree(x, 4);
-
-
-    tree->bfsFill(x+1, 299);
-    
-    printf("\n\ncalling bfsPrint: \n");
-    tree->bfsPrint();
-    
-    printf("\n\ncalling dfsPrint: \n");
-    tree->dfsPrint(tree);
-    
-}
-
