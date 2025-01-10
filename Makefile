@@ -14,4 +14,4 @@ BinaryTree.o: BinaryTree.cpp BinaryTree.h
 
 .PHONY: clean
 clean:
-	rm -f *.o BinaryTree
+	rm -f *.o Main

@@ -12,63 +12,77 @@ using namespace std;
 /* Basic implementation of a binary tree 
  */
 
-// Initialize a tree with a data pointer and and the size of the 
-// data it points to (all elements must be same size or bad things)
-BinaryTree::BinaryTree(void *data, size_t size){
+Leaf::Leaf(void *data){
     this->data = data;
-    this->elementSize = size;
     this->left = NULL;
     this->right = NULL;
 }
 
 // Destructor
-BinaryTree::~BinaryTree(){
-    free(data);
+Leaf::~Leaf(){
+    free(data); //bad idea?
     left = NULL;
     right = NULL;
 }
 
 // Initialize a new node, point to it with left 
 // Element size must be the same as this
-BinaryTree *BinaryTree::setLeft(void *data){
-    left = new BinaryTree(data, elementSize);
+Leaf *Leaf::setLeft(void *data){
+    left = new Leaf(data);
     return left;
 }
 
 // Initialize a new node, point to it with right 
 // Element size must be the same as this
-BinaryTree *BinaryTree::setRight(void *data){
-    right = new BinaryTree(data, elementSize);
+Leaf *Leaf::setRight(void *data){
+    right = new Leaf(data);
     return right;
 }
 
 // Setter method for left 
 // Not really needed since left is public, but cleaner
-BinaryTree *BinaryTree::linkLeft(BinaryTree *newLeft){
+Leaf *Leaf::linkLeft(Leaf *newLeft){
     this->left = newLeft;
     return left; // Returns itself, may make some code cleaner later
 }
 
 // Setter method for right 
-BinaryTree *BinaryTree::linkRight(BinaryTree *newRight){
+Leaf *Leaf::linkRight(Leaf *newRight){
     this->right = newRight;
     return right;
 }
 
+// Initialize a tree with a data pointer and and the size of the 
+// data it points to (all elements must be same size or bad things)
+BinaryTree::BinaryTree(void *data, size_t size){
+    this->head = new Leaf(data);
+    this->tail = this->head;
+    this->elementSize = size;
+    this->treeSize = 1;
+}
+
+Leaf *BinaryTree::addTail(void *data){
+    if (this->tail->left)
+        this->tail = this->tail->setRight(data);
+    else 
+        this->tail = this->tail->setLeft(data);
+    (this->treeSize)++;
+    return this->tail;
+}
 
 // Fill the tree in depth first order with contents of arr 
-BinaryTree *BinaryTree::dfsFill(void *arr){
+Leaf *BinaryTree::dfsFill(void *arr){
 
     if (!arr){
         return NULL;
     }
 
     char *it = (char *)arr;
-    this->setLeft(arr);
-    this->setRight(it+elementSize); 
+    this->head->setLeft(arr);
+    this->head->setRight(it+elementSize); 
 
     // TODO how do i do this lol
-    return this;
+    return this->tail;
 
 }
 
@@ -78,14 +92,14 @@ BinaryTree *BinaryTree::dfsFill(void *arr){
  * @param num - number of elements in array 
  * @return - the bottom rightmost node
  */
-BinaryTree *BinaryTree::bfsFill(void *arr, size_t num){
+Leaf *BinaryTree::bfsFill(void *arr, size_t num){
 
-    queue<BinaryTree *> q;
-    q.push(this);
+    queue<Leaf *> q;
+    q.push(this->head);
 
     char *it = (char *)arr;
 
-    BinaryTree *cur;
+    Leaf *cur;
     int j = 0;
 
     while (j < num){
@@ -94,50 +108,56 @@ BinaryTree *BinaryTree::bfsFill(void *arr, size_t num){
         q.pop();
 
         q.push(cur->setLeft(it));
+        (this->treeSize)++;
         it += elementSize;
         if (++j >= num)
             break;
 
         q.push(cur->setRight(it));
+        (this->treeSize)++;
         it += elementSize;
         j++;
     }
 
     // If there's a right node it's the last element so return it 
     // Otherwise left is the last element
-    return cur->right ? cur->right : cur->left;
+    return (this->tail = cur->right ? cur->right : cur->left);
 }
 
-int BinaryTree::dfsPrint(BinaryTree *node){
+int BinaryTree::dfsPrintRecur(Leaf* node){
 
     if (node == NULL)
         return 0;
     
     printf("%d ", *(int *)node->data);
 
-    if (dfsPrint(node->left) == -1)
+    if (dfsPrintRecur(node->left) == -1)
        cout << '\n';
 
-    if (dfsPrint(node->right) == 0)
+    if (dfsPrintRecur(node->right) == 0)
         cout << '\n';
     return 1;
 }
 
+void BinaryTree::dfsPrint(){
+    dfsPrintRecur(this->head);
+}
+
 void BinaryTree::bfsPrint(){
 
-    unordered_map<BinaryTree *, bool> marked;
+    unordered_map<Leaf *, bool> marked;
     queue<void *> q;
-    q.push(this);
+    q.push(this->head);
     int level = 1;
 
     //printf("%d ", *(int *)((BinaryTree *)q.front())->data);
 
-    BinaryTree *cur;
+    Leaf *cur;
     while (q.size() > 0){
-        cur = (BinaryTree *)q.front();
+        cur = (Leaf *)q.front();
         q.pop();
         if (!marked[cur]){
-            printf("%d ", *(int *)((BinaryTree *)cur->data));
+            printf("%d ", *(int *)((Leaf *)cur->data));
             marked[cur] = true;
             if (!marked.count(cur->left) && cur->left != NULL)
                 q.push(cur->left);
