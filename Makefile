@@ -1,6 +1,6 @@
 CC = g++
 
-BinaryTree: BinaryTree.cpp
+BinaryTree: BinaryTree.cpp BinaryTree.h
 
 .PHONY: clean
 clean:

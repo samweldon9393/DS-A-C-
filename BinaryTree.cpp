@@ -5,122 +5,108 @@
 #include <unordered_map>
 #include <cmath>
 
+#include "BinaryTree.h"
+
 using namespace std;
 
 /* Basic implementation of a binary tree 
  */
-class BinaryTree{
-    public:
 
-        // Everything is public - why not it's just practice
-        BinaryTree *left;
-        BinaryTree *right;
-        void *data;
-        size_t elementSize;
+// Initialize a tree with a data pointer and and the size of the 
+// data it points to (all elements must be same size or bad things)
+BinaryTree::BinaryTree(void *data, size_t size){
+    this->data = data;
+    this->elementSize = size;
+    this->left = NULL;
+    this->right = NULL;
+}
 
-        // Initialize a tree with a data pointer and and the size of the 
-        // data it points to (all elements must be same size or bad things)
-        BinaryTree(void *data, size_t size){
-            this->data = data;
-            this->elementSize = size;
-            this->left = NULL;
-            this->right = NULL;
-        }
+// Destructor
+BinaryTree::~BinaryTree(){
+    free(data);
+    left = NULL;
+    right = NULL;
+}
 
-        // Destructor
-        ~BinaryTree(){
-            free(data);
-            left = NULL;
-            right = NULL;
-        }
+// Initialize a new node, point to it with left 
+// Element size must be the same as this
+BinaryTree *BinaryTree::setLeft(void *data){
+    left = new BinaryTree(data, elementSize);
+    return left;
+}
 
-        // Initialize a new node, point to it with left 
-        // Element size must be the same as this
-        BinaryTree *setLeft(void *data){
-            left = new BinaryTree(data, elementSize);
-            return left;
-        }
+// Initialize a new node, point to it with right 
+// Element size must be the same as this
+BinaryTree *BinaryTree::setRight(void *data){
+    right = new BinaryTree(data, elementSize);
+    return right;
+}
 
-        // Initialize a new node, point to it with right 
-        // Element size must be the same as this
-        BinaryTree *setRight(void *data){
-            right = new BinaryTree(data, elementSize);
-            return right;
-        }
+// Setter method for left 
+// Not really needed since left is public, but cleaner
+BinaryTree *BinaryTree::linkLeft(BinaryTree *newLeft){
+    this->left = newLeft;
+    return left; // Returns itself, may make some code cleaner later
+}
 
-        // Setter method for left 
-        // Not really needed since left is public, but cleaner
-        BinaryTree *linkLeft(BinaryTree *newLeft){
-            this->left = newLeft;
-            return left; // Returns itself, may make some code cleaner later
-        }
+// Setter method for right 
+BinaryTree *BinaryTree::linkRight(BinaryTree *newRight){
+    this->right = newRight;
+    return right;
+}
 
-        // Setter method for right 
-        BinaryTree *linkRight(BinaryTree *newRight){
-            this->right = newRight;
-            return right;
-        }
 
-        // Methods defined outside of class 
-        
-        // Depth First Search through all elements and print them
-        int dfsPrint(BinaryTree *node);
+// Fill the tree in depth first order with contents of arr 
+BinaryTree *BinaryTree::dfsFill(void *arr){
 
-        // Breadth First Search through all elements and print them
-        void bfsPrint();
+    if (!arr){
+        return NULL;
+    }
 
-        // Fill the tree in depth first order with contents of arr 
-        BinaryTree *dfsFill(void *arr){
-            
-            if (!arr){
-                return NULL;
-            }
-        
-            char *it = (char *)arr;
-            this->setLeft(arr);
-            this->setRight(it+elementSize); 
-            
-            // TODO how do i do this lol
-            return this;
+    char *it = (char *)arr;
+    this->setLeft(arr);
+    this->setRight(it+elementSize); 
 
-        }
+    // TODO how do i do this lol
+    return this;
 
-        /* 
-         * Fill the tree in breadth first order with contents of arr
-         * @param arr - array of items to populate tree 
-         * @param num - number of elements in array 
-         * @return - the bottom rightmost node
-         */
-        BinaryTree *bfsFill(void *arr, size_t num){
-           
-            queue<BinaryTree *> q;
-            q.push(this);
+}
 
-            char *it = (char *)arr;
+/* 
+ * Fill the tree in breadth first order with contents of arr
+ * @param arr - array of items to populate tree 
+ * @param num - number of elements in array 
+ * @return - the bottom rightmost node
+ */
+BinaryTree *BinaryTree::bfsFill(void *arr, size_t num){
 
-            BinaryTree *cur;
-            int j = 0;
+    queue<BinaryTree *> q;
+    q.push(this);
 
-            while (j < num){
-                
-                cur = q.front();
-                q.pop();
+    char *it = (char *)arr;
 
-                q.push(cur->setLeft(it));
-                it += elementSize;
-                if (++j >= num)
-                    break;
+    BinaryTree *cur;
+    int j = 0;
 
-                q.push(cur->setRight(it));
-                it += elementSize;
-                j++;
-            }
+    while (j < num){
 
-            // If there's a right node it's the last element so return it 
-            // Otherwise left is the last element
-            return cur->right ? cur->right : cur->left;
-        }
-};
+        cur = q.front();
+        q.pop();
+
+        q.push(cur->setLeft(it));
+        it += elementSize;
+        if (++j >= num)
+            break;
+
+        q.push(cur->setRight(it));
+        it += elementSize;
+        j++;
+    }
+
+    // If there's a right node it's the last element so return it 
+    // Otherwise left is the last element
+    return cur->right ? cur->right : cur->left;
+}
 
 int BinaryTree::dfsPrint(BinaryTree *node){
 
