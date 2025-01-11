@@ -10,3 +10,9 @@ I'm taking Data Structures and Algorithms at school starting in a few weeks,
     I'm implenting in C/C++ to better understand how these data structures 
     truly work without Java's abstractions.
 </p>
+
+<div>
+<span>Following allong with 
+<a href="https://www.youtube.com/playlist?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb">
+MIT OpenCourseWare DS&A Course.</a>
+</div>
