@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <cmath>
 
 #ifdef BT
 #include "BSTree.h"
@@ -46,9 +47,9 @@ int HeapTest(){
     int arr[30] = {0};
 
     for (int i = 0 ; i < 30 ; i++)
-        arr[i] = i;
+        arr[i] = 30-i;
     
-    Heap *heap = new Heap(arr, 30, 4, &compare);
+    MaxHeap *heap = new MaxHeap(arr, 30, 4, &compare);
 
     printf("heap head: %d\n", *(int *)heap->head);
 
@@ -57,9 +58,16 @@ int HeapTest(){
 
     printf("element 2: %d\n", *(int *)it);
 
-    printf("compare element2, head: %d\n", heap->compare(it, heap->head));
-    printf("compare head, element2: %d\n", heap->compare(heap->head, it));
+    printf("changing fist element\n");
+    arr[0] = 1;
 
+    printf("heap head: %d\n", *(int *)heap->head);
+    printf("element 2: %d\n", *(int *)it);
+
+    printf("call maxHeapify()\n");
+    heap->maxHeapify(0);
+    printf("heap head: %d\n", *(int *)heap->head);
+    printf("element 2: %d\n", *(int *)it);
 
     return 0;
 }
@@ -74,4 +82,5 @@ int main(){
 
 
     #endif
+
 }

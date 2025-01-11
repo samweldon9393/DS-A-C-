@@ -20,4 +20,6 @@ public:
 
     // Initialize MaxHeap, return max element
     void *buildMaxHeap();
+
+    void maxHeapify(size_t index);
 };
