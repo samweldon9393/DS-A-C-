@@ -12,6 +12,23 @@ Heap::Heap(void *arr, size_t elements, size_t size, int (*compare)(void*, void*)
     this->compare = compare;
 }
 
+/*TODO get this to work for other data types
+ * 0                        2 
+ * 1 2                      3 4
+ * 3 4 5 6                  5 6 7 8 
+ * 7 8 9 10 11 12 13 14     9 10 11 12 13 14 15 16
+ */ 
+void Heap::printHeap(){
+    int power = 1;
+    for (int i = 0 ; i < this->elements ; i++){
+        printf("%d ", ((int *)this->head)[i]);
+        if (i+2 == pow(2, power)){
+            putchar('\n');
+            power++;
+        }
+    }
+} 
+
 MaxHeap::MaxHeap(void *arr, size_t elements, size_t size, int (*compare)(void*, void*)) :
     Heap(arr, elements, size, compare){};
 

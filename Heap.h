@@ -10,6 +10,8 @@ public:
     int (*compare)(void *, void *);
 
     Heap(void *arr, size_t elements, size_t elementSize, int (*compare)(void *, void*));
+
+    void printHeap();
 };
 
 class MaxHeap : public Heap{

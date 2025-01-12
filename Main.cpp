@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include <cmath>
 
 #ifdef BT
@@ -47,27 +48,17 @@ int HeapTest(){
     int arr[30] = {0};
 
     for (int i = 0 ; i < 30 ; i++)
-        arr[i] = 30-i;
+        arr[i] = i;
     
     MaxHeap *heap = new MaxHeap(arr, 30, 4, &compare);
 
-    printf("heap head: %d\n", *(int *)heap->head);
-
     char *it = (char *)heap->head;
-    it += heap->elementSize;
 
-    printf("element 2: %d\n", *(int *)it);
+    heap->printHeap();
 
-    printf("changing fist element\n");
-    arr[0] = 1;
-
-    printf("heap head: %d\n", *(int *)heap->head);
-    printf("element 2: %d\n", *(int *)it);
-
-    printf("call maxHeapify()\n");
-    heap->maxHeapify(0);
-    printf("heap head: %d\n", *(int *)heap->head);
-    printf("element 2: %d\n", *(int *)it);
+    heap->maxHeapify(2);
+    std::cout << "\ncalled maxHeapify\n";
+    heap->printHeap();
 
     return 0;
 }
