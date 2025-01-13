@@ -25,6 +25,7 @@ void Heap::printHeap(void (*print)(void *)){
             power++;
         }
     }
+    putchar('\n');
 } 
 
 MaxHeap::MaxHeap(void *arr, size_t elements, size_t size, int (*compare)(void*, void*)) :
@@ -56,13 +57,14 @@ void MaxHeap::maxHeapify(size_t index){
     // Actual 0 indexing is needed for this part TODO maybe?
     index--;
 
-    int biggerChild, smallerChild;
-    if (this->compare(it+(elementSize * leftChild), it+(elementSize * rightChild)) > 0){
+    int biggerChild;
+    if (leftChild >= elements)
+        return;                             // We're on a leaf
+    else if (rightChild >= elements ||      // Node only has a left child
+            this->compare(it+(elementSize * leftChild), it+(elementSize * rightChild)) > 0){
         biggerChild = leftChild;
-        smallerChild = rightChild;
     } else {
         biggerChild = rightChild;
-        smallerChild = leftChild;
     }
 
     void *temp = malloc(elementSize);

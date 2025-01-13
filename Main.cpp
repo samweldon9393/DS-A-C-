@@ -49,18 +49,19 @@ void printInt(void *x){
 }
 
 int HeapTest(){
-    int arr[30] = {0};
+    int size = 29;
+    int arr[size] = {0};
 
-    for (int i = 0 ; i < 30 ; i++)
+    for (int i = 0 ; i < size ; i++)
         arr[i] = i;
     
-    MaxHeap *heap = new MaxHeap(arr, 30, 4, &compare);
+    MaxHeap *heap = new MaxHeap(arr, size, 4, &compare);
 
     char *it = (char *)heap->head;
 
     heap->printHeap(&printInt);
 
-    heap->maxHeapify(2);
+    heap->maxHeapify(14);
     std::cout << "\ncalled maxHeapify\n";
     heap->printHeap(&printInt);
 
