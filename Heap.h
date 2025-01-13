@@ -21,7 +21,7 @@ public:
     MaxHeap(void *arr, size_t elements, size_t elementSize, int (*compare)(void *, void *));
 
     // Initialize MaxHeap, return max element
-    void *buildMaxHeap();
+    void buildMaxHeap();
 
-    void maxHeapify(size_t index);
+    int maxHeapify(size_t index);
 };

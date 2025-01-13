@@ -31,13 +31,23 @@ void Heap::printHeap(void (*print)(void *)){
 MaxHeap::MaxHeap(void *arr, size_t elements, size_t size, int (*compare)(void*, void*)) :
     Heap(arr, elements, size, compare){};
 
-void *MaxHeap::buildMaxHeap(){
+void MaxHeap::buildMaxHeap(){
 
+    int rows = 0;
 
-    
+    while (pow(2, ++rows) < elements);
+
+    int first = pow(2, rows-1) - 2;
+
+    printf("first: %d\n", first);
+    for (int i = first ; i >= 0 ; i--){
+        int j = i;
+        while (j <= first)
+            j = maxHeapify(j);
+    }
 }
 
-void MaxHeap::maxHeapify(size_t index){
+int MaxHeap::maxHeapify(size_t index){
 
     // Indexed at 1 works better for the math in this part of the function
     index++;
@@ -45,21 +55,22 @@ void MaxHeap::maxHeapify(size_t index){
     int level = log2(index);
     int nodesOnLevel = pow(2, level);
     
-    // If we're on the lowest level, it's lead and therefor already a max heap
+    // If we're on the lowest level, it's a leaf and therefor a max heap
+    // Return value always high enough to break loop in buildMaxHeap
     if (log2(this->elements) == level)
-        return;
+        return elements + 1;
 
     int leftChild = index + (index - nodesOnLevel) + nodesOnLevel - 1;
     int rightChild = leftChild + 1;
 
     char *it = (char *)this->head;
 
-    // Actual 0 indexing is needed for this part TODO maybe?
+    // Actual 0 indexing is needed for this part 
     index--;
 
     int biggerChild;
     if (leftChild >= elements)
-        return;                             // We're on a leaf
+        return elements + 1;                             // We're on a leaf
     else if (rightChild >= elements ||      // Node only has a left child
             this->compare(it+(elementSize * leftChild), it+(elementSize * rightChild)) > 0){
         biggerChild = leftChild;
@@ -74,4 +85,6 @@ void MaxHeap::maxHeapify(size_t index){
         memcpy(it+(biggerChild * elementSize), temp, elementSize);
     }
     free(temp);
+
+    return biggerChild;
 }

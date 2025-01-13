@@ -37,9 +37,8 @@ int BinaryTreeTest(){
 }
 #endif
 
-#ifdef H
 #include "Heap.h"
-
+#ifdef H
 int compare(void *x, void *y){
     return *(int *)x - *(int *)y;
 }
@@ -49,20 +48,18 @@ void printInt(void *x){
 }
 
 int HeapTest(){
-    int size = 29;
-    int arr[size] = {0};
+    int size = 15;
+    int *arr = (int *)malloc(sizeof(int) * size);
 
     for (int i = 0 ; i < size ; i++)
         arr[i] = i;
     
     MaxHeap *heap = new MaxHeap(arr, size, 4, &compare);
 
-    char *it = (char *)heap->head;
-
     heap->printHeap(&printInt);
 
-    heap->maxHeapify(14);
-    std::cout << "\ncalled maxHeapify\n";
+    std::cout <<"\ncalleing buildMaxHeap\n";
+    heap->buildMaxHeap();
     heap->printHeap(&printInt);
 
     return 0;
