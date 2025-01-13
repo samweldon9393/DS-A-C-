@@ -23,4 +23,4 @@ Heap.o: Heap.cpp Heap.h
 
 .PHONY: clean
 clean:
-	rm -f *.o Main MainH MainBT
+	rm -f *.o a.out Main MainH MainBT

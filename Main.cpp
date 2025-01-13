@@ -44,6 +44,10 @@ int compare(void *x, void *y){
     return *(int *)x - *(int *)y;
 }
 
+void printInt(void *x){
+    printf("%d ", *(int *)x);
+}
+
 int HeapTest(){
     int arr[30] = {0};
 
@@ -54,11 +58,11 @@ int HeapTest(){
 
     char *it = (char *)heap->head;
 
-    heap->printHeap();
+    heap->printHeap(&printInt);
 
     heap->maxHeapify(2);
     std::cout << "\ncalled maxHeapify\n";
-    heap->printHeap();
+    heap->printHeap(&printInt);
 
     return 0;
 }

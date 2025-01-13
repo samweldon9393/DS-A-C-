@@ -11,7 +11,7 @@ public:
 
     Heap(void *arr, size_t elements, size_t elementSize, int (*compare)(void *, void*));
 
-    void printHeap();
+    void printHeap(void (*print)(void *));
 };
 
 class MaxHeap : public Heap{

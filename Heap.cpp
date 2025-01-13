@@ -12,16 +12,14 @@ Heap::Heap(void *arr, size_t elements, size_t size, int (*compare)(void*, void*)
     this->compare = compare;
 }
 
-/*TODO get this to work for other data types
- * 0                        2 
- * 1 2                      3 4
- * 3 4 5 6                  5 6 7 8 
- * 7 8 9 10 11 12 13 14     9 10 11 12 13 14 15 16
+/* Type agnostinc Heap printer
+ * @param print - pass a pointer to print function.
  */ 
-void Heap::printHeap(){
+void Heap::printHeap(void (*print)(void *)){
     int power = 1;
+    char *it = (char *)this->head;
     for (int i = 0 ; i < this->elements ; i++){
-        printf("%d ", ((int *)this->head)[i]);
+        print(it+(i*elementSize));
         if (i+2 == pow(2, power)){
             putchar('\n');
             power++;
