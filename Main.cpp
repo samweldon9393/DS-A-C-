@@ -53,7 +53,7 @@ int HeapTest(){
 
     for (int i = 0 ; i < size ; i++)
         arr[i] = i;
-    
+
     MaxHeap *heap = new MaxHeap(arr, size, 4, &compare);
 
     heap->printHeap(&printInt);
@@ -70,6 +70,26 @@ int HeapTest(){
         std::cout << " ";
     }
     std::cout << '\n';
+
+    MinHeap *minHeap = new MinHeap(sorted, size, 4, &compare);
+
+    std::cout << "now it's a MinHeap: \n";
+    minHeap->printHeap(&printInt);
+    std::cout << '\n';
+
+    std::cout <<"\ncalleing buildMinHeap\n";
+    minHeap->buildMinHeap();
+    minHeap->printHeap(&printInt);
+
+    std::cout << "\ncalling heapSort\n";
+
+    int *minSorted = (int *)minHeap->heapSort();
+    for (int i = 0 ; i < size ; i++){
+        std::cout << *(minSorted + i);
+        std::cout << " ";
+    }
+    std::cout << '\n';
+
 
     return 0;
 }

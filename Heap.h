@@ -37,3 +37,28 @@ public:
     // Returns a new array sorted in non-increasing order
     void *heapSort();
 };
+
+class MinHeap : public Heap{
+
+public:
+
+    MinHeap(void *arr, size_t elements, size_t elementSize, int (*compare)(void *, void *));
+
+    // Initialize MaxHeap, return max element
+    void *buildMinHeap();
+
+    // Create a Max Heap from a subtree
+    int minHeapify(size_t index);
+
+    // Return top element 
+    void *getMin();
+
+    // Removes max element from the heap and returns a pointer to it 
+    // The pointer points to a spot at the end of the array which could be 
+    // overwritten later, so copy this data if you need it.
+    void *popMin();
+
+    // Returns a new array sorted in non-increasing order
+    void *heapSort();
+};
+
