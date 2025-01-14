@@ -35,7 +35,7 @@ void *MaxHeap::buildMaxHeap(){
 
     int rows = 0;
 
-    while (pow(2, ++rows) < elements);
+    while (pow(2, ++rows) <= elements);
 
     int first = pow(2, rows-1) - 2;
 
@@ -107,4 +107,16 @@ void *MaxHeap::popMax(){
     this->buildMaxHeap();
 
     return last;
+}
+
+void *MaxHeap::heapSort(){
+    void *arr = malloc(elements * elementSize);
+    char *it = (char *)arr;
+
+    while (elements > 0){
+        memcpy(it, this->popMax(), elementSize);
+        it += elementSize;
+    }
+
+    return arr;
 }

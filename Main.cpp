@@ -62,17 +62,13 @@ int HeapTest(){
     heap->buildMaxHeap();
     heap->printHeap(&printInt);
 
-    std::cout << "\nMax: "; 
-    int *oldMax = (int *)heap->popMax();
-    std::cout << *oldMax;
-    std::cout << '\n';
+    std::cout << "\ncalling heapSort\n";
 
-    std::cout <<"\ncalleing buildMaxHeap\n";
-    heap->buildMaxHeap();
-    heap->printHeap(&printInt);
-
-    std::cout << "\noldMax: ";
-    std::cout << *oldMax;
+    int *sorted = (int *)heap->heapSort();
+    for (int i = 0 ; i < size ; i++){
+        std::cout << *(sorted + i);
+        std::cout << " ";
+    }
     std::cout << '\n';
 
     return 0;

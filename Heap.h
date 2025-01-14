@@ -33,4 +33,7 @@ public:
     // The pointer points to a spot at the end of the array which could be 
     // overwritten later, so copy this data if you need it.
     void *popMax();
+
+    // Returns a new array sorted in non-increasing order
+    void *heapSort();
 };
