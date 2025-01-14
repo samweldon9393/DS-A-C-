@@ -31,7 +31,7 @@ void Heap::printHeap(void (*print)(void *)){
 MaxHeap::MaxHeap(void *arr, size_t elements, size_t size, int (*compare)(void*, void*)) :
     Heap(arr, elements, size, compare){};
 
-void MaxHeap::buildMaxHeap(){
+void *MaxHeap::buildMaxHeap(){
 
     int rows = 0;
 
@@ -39,12 +39,12 @@ void MaxHeap::buildMaxHeap(){
 
     int first = pow(2, rows-1) - 2;
 
-    printf("first: %d\n", first);
     for (int i = first ; i >= 0 ; i--){
         int j = i;
         while (j <= first)
             j = maxHeapify(j);
     }
+    return this->head;
 }
 
 int MaxHeap::maxHeapify(size_t index){
@@ -87,4 +87,24 @@ int MaxHeap::maxHeapify(size_t index){
     free(temp);
 
     return biggerChild;
+}
+
+void *MaxHeap::getMax(){
+    return this->head;
+}
+
+void *MaxHeap::popMax(){
+    void *temp = malloc(elementSize);
+    char *last = (char *)this->head;
+    last += (elements - 1) * elementSize;
+    
+    memcpy(temp, this->head, elementSize);
+    memcpy(this->head, last, elementSize);
+    memcpy(last, temp, elementSize);
+
+    elements--;
+
+    this->buildMaxHeap();
+
+    return last;
 }

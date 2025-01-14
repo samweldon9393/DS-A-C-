@@ -62,6 +62,19 @@ int HeapTest(){
     heap->buildMaxHeap();
     heap->printHeap(&printInt);
 
+    std::cout << "\nMax: "; 
+    int *oldMax = (int *)heap->popMax();
+    std::cout << *oldMax;
+    std::cout << '\n';
+
+    std::cout <<"\ncalleing buildMaxHeap\n";
+    heap->buildMaxHeap();
+    heap->printHeap(&printInt);
+
+    std::cout << "\noldMax: ";
+    std::cout << *oldMax;
+    std::cout << '\n';
+
     return 0;
 }
 #endif
