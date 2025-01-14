@@ -10,6 +10,7 @@ Heap::Heap(void *arr, size_t elements, size_t size, int (*compare)(void*, void*)
     this->elements = elements;
     this->elementSize = size;
     this->compare = compare;
+    this->capacity = elements;
 }
 
 /* Type agnostinc Heap printer
@@ -119,6 +120,24 @@ void *MaxHeap::heapSort(){
     }
 
     return arr;
+}
+
+void MaxHeap::insert(void *item){
+    if (elements >= capacity){
+        int newCapacity = (capacity + 1) * 2;
+        void *resize = malloc(newCapacity * elementSize);
+        memcpy(resize, head, (elements * elementSize));
+        free(head);
+        head = resize;
+        capacity = newCapacity;
+    }
+
+    char *it = (char *)head;
+    it += elements * elementSize;
+    memcpy(it, item, elementSize);
+    this->elements++;
+
+    buildMaxHeap();
 }
 
 /*

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <cmath>
-
-#ifdef BT
+#include "Heap.h"
 #include "BSTree.h"
+
 int BinaryTreeTest(){
 
     int x[30] = {0};
@@ -35,10 +35,7 @@ int BinaryTreeTest(){
     
     return 0;
 }
-#endif
 
-#include "Heap.h"
-#ifdef H
 int compare(void *x, void *y){
     return *(int *)x - *(int *)y;
 }
@@ -57,6 +54,11 @@ int HeapTest(){
     MaxHeap *heap = new MaxHeap(arr, size, 4, &compare);
 
     heap->printHeap(&printInt);
+    std::cout << "inserting\n";
+    int l = 50;
+
+    heap->insert(&l);
+    heap->printHeap(&printInt);
 
     std::cout <<"\ncalleing buildMaxHeap\n";
     heap->buildMaxHeap();
@@ -70,6 +72,7 @@ int HeapTest(){
         std::cout << " ";
     }
     std::cout << '\n';
+
 
     MinHeap *minHeap = new MinHeap(sorted, size, 4, &compare);
 
@@ -88,12 +91,12 @@ int HeapTest(){
         std::cout << *(minSorted + i);
         std::cout << " ";
     }
+
     std::cout << '\n';
 
 
     return 0;
 }
-#endif
 
 int main(){
 
@@ -101,8 +104,12 @@ int main(){
 
     return HeapTest();
 
-
-
     #endif
+
+
+    #ifdef BT 
+
+    return BinaryTreeTest();
+    #endif 
 
 }

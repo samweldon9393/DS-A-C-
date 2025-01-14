@@ -7,6 +7,7 @@ public:
     void *head;
     size_t elements;
     size_t elementSize;
+    size_t capacity;
     int (*compare)(void *, void *);
 
     Heap(void *arr, size_t elements, size_t elementSize, int (*compare)(void *, void*));
@@ -36,6 +37,8 @@ public:
 
     // Returns a new array sorted in non-increasing order
     void *heapSort();
+
+    void insert(void *item);
 };
 
 class MinHeap : public Heap{
@@ -60,5 +63,7 @@ public:
 
     // Returns a new array sorted in non-increasing order
     void *heapSort();
+
+    void insert(void *item);
 };
 
