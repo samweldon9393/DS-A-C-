@@ -1,9 +1,9 @@
 CC = g++
 CFLAGS = -g -Wall
 
-MainH: MainH.o Heap.o
+MainBT: MainBT.o BSTree.o BinaryTree.o Heap.o
 
-MainBT: MainBT.o BSTree.o BinaryTree.o
+MainH: MainH.o Heap.o Heap.o BinaryTree.o BSTree.o
 
 MainH.o: Main.cpp
 	$(CC) -c -DH $(CFLAGS) -o MainH.o Main.cpp
